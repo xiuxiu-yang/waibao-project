@@ -20,6 +20,7 @@ module.exports = {
     'vue/no-multiple-template-root': 'off',
     'vue/multi-word-component-names': 'off',
     'import/extensions': 'off',
-    'no-param-reassign': 'off'
+    'no-param-reassign': 'off',
+    'vue/no-v-for-template-key': 'off'
   }
 }
