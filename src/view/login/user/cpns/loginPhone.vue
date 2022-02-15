@@ -6,10 +6,10 @@
       :rules="rules"
       ref="elFormPhoneRef"
     >
-      <el-form-item label="手机号" prop="phone">
+      <el-form-item label="手机号:" prop="phone">
         <el-input v-model="loginPhone.phone"></el-input>
       </el-form-item>
-      <el-form-item label="验证码" prop="code">
+      <el-form-item label="验证码:" prop="code">
         <div class="code">
           <el-input v-model="loginPhone.code"></el-input>
           <el-button

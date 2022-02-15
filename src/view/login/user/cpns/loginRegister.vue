@@ -7,26 +7,32 @@
       <h3 class="registerTitle">注册用户</h3>
       <el-form
         :model="register"
-        label-width="80px"
+        label-width="90px"
         :rules="rules"
         ref="elFormRef"
       >
-        <el-form-item label="手机号" prop="phone">
+        <el-form-item label="姓名:" prop="name">
+          <el-input v-model="register.name"></el-input>
+        </el-form-item>
+        <el-form-item label="身份证:" prop="id">
+          <el-input v-model="register.id"></el-input>
+        </el-form-item>
+        <el-form-item label="手机号:" prop="phone">
           <el-input v-model="register.phone"></el-input>
         </el-form-item>
-        <el-form-item label="密码" prop="password">
+        <el-form-item label="密码:" prop="password">
           <el-input
             v-model="register.password"
             :show-password="true"
           ></el-input>
         </el-form-item>
-        <el-form-item label="确认密码" prop="password">
+        <el-form-item label="确认密码:" prop="password">
           <el-input
             v-model="register.confirmPassword"
             :show-password="true"
           ></el-input>
         </el-form-item>
-        <el-form-item label="验证码" prop="code">
+        <el-form-item label="验证码:" prop="code">
           <div class="code">
             <el-input v-model="register.code"></el-input>
             <el-button
@@ -56,6 +62,8 @@ import throttle from '@/utils/throttle'
 import getCode from '@/utils/getCode'
 
 const register = reactive({
+  name: '',
+  id: '',
   phone: '',
   password: '',
   confirmPassword: '',
@@ -63,6 +71,20 @@ const register = reactive({
 })
 
 const rules = {
+  name: [
+    {
+      required: true,
+      message: '请输入手机号',
+      trigger: 'blur'
+    }
+  ],
+  id: [
+    {
+      required: true,
+      message: '请输入手机号',
+      trigger: 'blur'
+    }
+  ],
   phone: [
     {
       required: true,

@@ -21,6 +21,8 @@ module.exports = {
     'vue/multi-word-component-names': 'off',
     'import/extensions': 'off',
     'no-param-reassign': 'off',
-    'vue/no-v-for-template-key': 'off'
+    'vue/no-v-for-template-key': 'off',
+    'vue/no-mutating-props': 'off',
+    'vue/no-v-model-argument': 'off'
   }
 }

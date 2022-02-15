@@ -6,10 +6,10 @@
       :rules="rules"
       ref="elFormAccountRef"
     >
-      <el-form-item label="账号" prop="account">
+      <el-form-item label="账号:" prop="account">
         <el-input v-model="loginAccount.account"></el-input>
       </el-form-item>
-      <el-form-item label="密码" prop="password">
+      <el-form-item label="密码:" prop="password">
         <el-input
           v-model="loginAccount.password"
           :show-password="true"

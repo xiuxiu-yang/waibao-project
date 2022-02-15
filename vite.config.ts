@@ -11,6 +11,15 @@ export default defineConfig({
       '@': path.resolve(__dirname, 'src')
     }
   },
+  server: {
+    proxy: {
+      '/api': {
+        target: 'http://pcf.natapp1.cc',
+        changeOrigin: true,
+        rewrite: (pathName) => pathName.replace(/^\/api/, '')
+      }
+    }
+  },
   plugins: [
     vue(),
     AutoImport({

@@ -9,8 +9,8 @@
           </span>
         </template>
         <el-form :model="admin" label-width="80px" :rules="rules">
-          <el-form-item label="账号" prop="account">
-            <el-input v-model="admin.account"></el-input>
+          <el-form-item label="账号" prop="loginAccount">
+            <el-input v-model="admin.loginAccount"></el-input>
           </el-form-item>
           <el-form-item label="密码" prop="password">
             <el-input v-model="admin.password" :show-password="true"></el-input>
@@ -32,15 +32,16 @@ import { reactive } from 'vue'
 import { useRouter } from 'vue-router'
 
 import { UserFilled } from '@element-plus/icons-vue'
+import { useAdmin } from '@/store'
 
 import throttle from '@/utils/throttle'
 
 const admin = reactive({
-  account: '',
+  loginAccount: '',
   password: ''
 })
 const rules = reactive({
-  account: [
+  loginAccount: [
     {
       required: true,
       message: '请输入账号',
@@ -55,8 +56,11 @@ const rules = reactive({
 })
 
 const router = useRouter()
+const adminStore = useAdmin()
 
 const handlerLogin = throttle(() => {
+  console.log(admin)
+  adminStore.adminLoginAction(admin)
   router.push('/admin')
 }, 1000)
 </script>
