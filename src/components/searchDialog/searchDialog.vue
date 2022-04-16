@@ -11,6 +11,7 @@
         v-model="formData"
         :form-info="props.formInfo"
         :col-style="props.colStyle"
+        :label-position="props.labelPosition"
         class="dialogForm"
         ref="ctFormRef"
       ></ct-form>
@@ -39,7 +40,8 @@ const props = defineProps<{
   formInfo: IFormInfoType[]
   colStyle: number
   formTitle: string
-  defaultData: {} | Object
+  defaultData: any
+  labelPosition: string
 }>()
 
 // eslint-disable-next-line no-undef
@@ -51,6 +53,10 @@ watch(
   () => props.defaultData,
   (newValue) => {
     formData.value = { ...newValue }
+    if (props.formInfo.find((item) => item.field === 'url') && newValue.url) {
+      formData.value.urlL = formData.value.url.split('/').at(-1)
+      formData.value.urlF = formData.value.url.split('/').at(-2)
+    }
   }
 )
 props.formInfo.forEach((item) => {
@@ -69,7 +75,7 @@ props.formInfo.forEach((item) => {
   }
 })
 
-const ctFormRef = ref<InstanceType<typeof ctForm>>()
+const ctFormRef = ref<typeof ctForm>()
 const handlerDialogConfirm = () => {
   if (ctFormRef.value?.handlerFormValidate()) dialogVisible.value = false
   if (Object.keys(props.defaultData).length) {
@@ -81,11 +87,15 @@ const handlerDialogConfirm = () => {
     const option2 = ruleItem?.options?.find(
       (item) => item.value === formData.value.ruleId
     )
-    emit('handlerConfirmEdit', {
-      ...formData.value,
-      userName: option?.label,
-      ruleName: option2?.label
-    })
+    if (userItem && ruleItem) {
+      emit('handlerConfirmEdit', {
+        ...formData.value,
+        userName: option?.label,
+        ruleName: option2?.label
+      })
+    } else {
+      emit('handlerConfirmEdit', formData.value)
+    }
   } else {
     emit('handlerConfirmCreate', formData.value)
   }

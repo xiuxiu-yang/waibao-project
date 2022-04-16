@@ -3,10 +3,12 @@
     <ct-form
       :col-style="props.colStyle"
       :form-info="props.formInfo"
+      :label-position="'left'"
       v-model="formData"
     ></ct-form>
     <el-button type="primary" @click="handlerReset">重置</el-button>
     <el-button type="primary" @click="handlerSearch">搜索</el-button>
+    <slot name="bankInfo"></slot>
   </div>
 </template>
 

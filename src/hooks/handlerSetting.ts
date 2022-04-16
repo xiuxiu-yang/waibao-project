@@ -11,7 +11,7 @@ export default function handlerSetting(
 ) {
   const defaultData = ref({})
   const adminStore = useAdmin()
-  const searchDialogRef = ref<InstanceType<typeof searchDialog>>()
+  const searchDialogRef = ref<typeof searchDialog>()
   const handlerDelete = (row: Object) => {
     if (deleteCallback) {
       deleteCallback(row)

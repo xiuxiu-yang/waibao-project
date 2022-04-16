@@ -6,11 +6,6 @@ const tableConfig = {
       minWidth: '90'
     },
     {
-      label: '图片',
-      prop: 'photoUrl',
-      minWidth: '100'
-    },
-    {
       label: '产品数量',
       prop: 'productNumber',
       minWidth: '80'
@@ -23,8 +18,14 @@ const tableConfig = {
     {
       label: '产品状态',
       prop: 'productStatus',
-      minWidth: '100',
+      minWidth: '110',
       slotName: 'status'
+    },
+    {
+      label: '展示状态',
+      prop: 'showStatus',
+      minWidth: '110',
+      slotName: 'showStatus'
     },
     {
       label: '产品描述',
@@ -32,14 +33,16 @@ const tableConfig = {
       minWidth: '120'
     },
     {
-      label: '开始时间',
-      prop: 'beginTime',
-      minWidth: '170'
+      label: '持续时间',
+      prop: 'susTainTime',
+      minWidth: '300',
+      slotName: 'susTainTime'
     },
     {
-      label: '结束时间',
-      prop: 'endTime',
-      minWidth: '170'
+      label: '生成随机链接',
+      prop: 'random',
+      minWidth: '100',
+      slotName: 'random'
     },
     {
       label: '编辑',

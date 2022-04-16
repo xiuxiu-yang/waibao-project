@@ -1,17 +1,7 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
+import localCache from '@/utils/localCache'
 
 const routes: RouteRecordRaw[] = [
-  {
-    path: '/user',
-    redirect: '/user/main',
-    component: () => import('@/view/user/user.vue'),
-    children: [
-      {
-        path: 'main',
-        component: () => import('../view/user/main/main.vue')
-      }
-    ]
-  },
   {
     path: '/admin',
     component: () => import('@/view/admin/admin.vue'),
@@ -58,12 +48,8 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/login',
     component: () => import('@/view/login/login.vue'),
-    redirect: '/login/user',
+    redirect: '/login/admin',
     children: [
-      {
-        path: 'user',
-        component: () => import('@/view/login/user/user.vue')
-      },
       {
         path: 'admin',
         component: () => import('@/view/login/admin/admin.vue')
@@ -72,13 +58,22 @@ const routes: RouteRecordRaw[] = [
   },
   {
     path: '/',
-    redirect: '/login'
+    redirect: '/admin'
   }
 ]
 
 const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHistory('/admins/'),
   routes
+})
+
+router.beforeEach((to) => {
+  const token = localCache.getItem('ad_token')
+  const currentPath = to.fullPath
+  if (!token && currentPath.includes('/main')) {
+    return '/login'
+  }
+  return true
 })
 
 export default router

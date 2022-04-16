@@ -1,7 +1,7 @@
 <template>
   <div class="navaside">
     <div class="userInfo">
-      <el-avatar :size="50" :src="circleUrl"></el-avatar>
+      <h1>银行后台管理</h1>
     </div>
     <el-menu
       active-text-color="#ffd04b"
@@ -19,7 +19,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { computed } from 'vue'
 
 import { useRoute } from 'vue-router'
 
@@ -32,10 +32,6 @@ const props = defineProps<{
   path: Ipath[]
 }>()
 
-const circleUrl = ref(
-  'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png'
-)
-
 const active = computed(() => {
   const currentPath = useRoute().fullPath
   return props.path.find((item) => item.path === currentPath)?.path
@@ -47,7 +43,11 @@ const active = computed(() => {
   width: 100%;
   text-align: center;
   .userInfo {
-    padding: 20px 0;
+    height: 100px;
+    color: wheat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   .el-menu-vertical {
     border-right: none;

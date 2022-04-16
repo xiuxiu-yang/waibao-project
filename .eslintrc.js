@@ -23,6 +23,7 @@ module.exports = {
     'no-param-reassign': 'off',
     'vue/no-v-for-template-key': 'off',
     'vue/no-mutating-props': 'off',
-    'vue/no-v-model-argument': 'off'
+    'vue/no-v-model-argument': 'off',
+    'no-plusplus': 'off'
   }
 }

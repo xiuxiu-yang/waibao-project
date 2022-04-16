@@ -23,6 +23,12 @@ const tableConfig = {
       slotName: 'ruleStatus'
     },
     {
+      label: '规则详情',
+      prop: 'ruleEdit',
+      minWidth: '90',
+      slotName: 'ruleEdit'
+    },
+    {
       label: '创建时间',
       prop: 'createDate',
       minWidth: '170'

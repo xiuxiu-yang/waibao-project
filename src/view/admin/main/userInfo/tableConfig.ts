@@ -1,7 +1,7 @@
 const tableConfig = {
   tableInfo: [
     {
-      label: '角色名',
+      label: '用户名',
       prop: 'roleName',
       minWidth: '90'
     },

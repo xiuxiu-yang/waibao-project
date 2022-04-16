@@ -29,8 +29,6 @@
 <script setup lang="ts">
 import { reactive } from 'vue'
 
-import { useRouter } from 'vue-router'
-
 import { UserFilled } from '@element-plus/icons-vue'
 import { useAdmin } from '@/store'
 
@@ -55,13 +53,10 @@ const rules = reactive({
   }
 })
 
-const router = useRouter()
 const adminStore = useAdmin()
 
 const handlerLogin = throttle(() => {
-  console.log(admin)
   adminStore.adminLoginAction(admin)
-  router.push('/admin')
 }, 1000)
 </script>
 

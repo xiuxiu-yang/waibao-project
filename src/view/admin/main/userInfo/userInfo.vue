@@ -10,6 +10,7 @@
       @handler-edit="handlerEdit"
       @handler-delete="handlerDelete"
       @handlerMoreDelete="handlerMoreDelete"
+      ref="tableContentRef"
     ></table-content>
     <search-dialog
       v-bind="dialogConfig"
@@ -21,6 +22,7 @@
 </template>
 
 <script setup lang="ts">
+import { ref } from 'vue'
 import { useAdmin } from '@/store'
 import TableContent from '@/components/tableContent/tableContent.vue'
 import searchDialog from '@/components/searchDialog/searchDialog.vue'
@@ -57,9 +59,11 @@ const {
   handlerReset
 } = handlerSetting(deleteCallback, tableConfig.tableName)
 
+const tableContentRef = ref<typeof TableContent>()
 const handlerConfirmEdit = (data: any) => {
   delete data.createDate
   adminStore.editUserInfoAction(data)
+  tableContentRef.value!.page.currentPage = 1
 }
 </script>
 

@@ -34,6 +34,7 @@ const dialogConfig: IDialogType = {
     }
   ],
   formTitle: '违规信息',
-  colStyle: 24
+  colStyle: 24,
+  labelPosition: 'left'
 }
 export default dialogConfig

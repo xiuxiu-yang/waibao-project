@@ -12,4 +12,5 @@ export interface IDialogType {
   formInfo: IFormInfoType[]
   formTitle: string
   colStyle: number
+  labelPosition: string
 }

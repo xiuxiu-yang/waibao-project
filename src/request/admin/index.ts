@@ -1,13 +1,27 @@
 import axios from 'axios'
+import { ElMessage } from 'element-plus'
+import router from '@/router'
 
 axios.interceptors.request.use((config) => {
-  const token = JSON.parse(localStorage.getItem('token')!)
+  const token = JSON.parse(localStorage.getItem('ad_token')!)
   if (token && config.headers) {
     config.headers.token = token
   }
 
   return config
 })
+
+axios.interceptors.response.use((res) => {
+  if (res.data.code === 444) {
+    router.push('/login/admin')
+    ElMessage.error('账号登入信息已过期，请重新登入!')
+  }
+  return res
+})
+
+export function adminExitRequest() {
+  return axios.post('/api/user/logout')
+}
 
 export function adminLoginRequest(data: Object) {
   return axios.post('/api/user/admin/login', data)
@@ -65,6 +79,13 @@ export function createViolationInfoRequest(data: any) {
   return axios.post('/api/break/rule/add/info', data)
 }
 
+export function createActivityRequest(data: any) {
+  const url = `http:/pcf.natapp1.cc/get/seckill/do/${data.urlF}/${data.urlL}`
+  delete data.urlL
+  delete data.urlF
+  return axios.post('/api/product/add/info', { ...data, url })
+}
+
 export function deleteViolationRequest(data: number[]) {
   return axios.post('/api/break/rule/delete/info', data)
 }
@@ -99,4 +120,26 @@ export function editRuleRequest(data: any) {
 
 export function editUserInfoRequest(data: any) {
   return axios.post('/api/user/update/info', data)
+}
+
+export function editActivityRequest(data: any) {
+  let { url } = data
+  if (data.urlL && data.urlF) {
+    url = `http:/pcf.natapp1.cc/get/seckill/do/${data.urlF}/${data.urlL}`
+    delete data.urlL
+    delete data.urlF
+  }
+  return axios.post('/api/product/update/info', { ...data, url })
+}
+
+export function editSkillRuleRequest(data: any) {
+  return axios.post(`/api/rule/update/config/${data.ruleId}`, data)
+}
+
+export function adminRandomRequest(productId: number) {
+  return axios.post('/api/product/update/url', { productId })
+}
+
+export function adminGetBankInfo() {
+  return axios.get('/api/bank/get/info')
 }

@@ -57,7 +57,7 @@ const path = reactive([
       background-color: #545c64;
     }
     .el-header {
-      background-color: aqua;
+      background-color: rgb(245, 245, 245);
     }
   }
 }

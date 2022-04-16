@@ -29,7 +29,18 @@
           inactive-text="关"
           active-value="1"
           inactive-value="0"
-          @change="handlerSwitch(scope.row, $event)"
+          @change="handlerSwitch(scope.row, $event, 'ruleStatus')"
+        />
+      </template>
+      <template #showStatus="scope">
+        <el-switch
+          :model-value="scope.row['showStatus']"
+          size="small"
+          active-text="开"
+          inactive-text="关"
+          active-value="0"
+          inactive-value="1"
+          @change="handlerSwitch(scope.row, $event, 'showStatus')"
         />
       </template>
       <template #status="scope">
@@ -89,6 +100,19 @@
       <template #passStatus="scope">
         <span>{{ scope.row['passStatus'] === '1' ? '通过' : '未通过' }}</span>
       </template>
+      <template #ruleEdit="scope">
+        <el-button type="text" size="small" @click="handlerRule(scope.row)"
+          >规则详情</el-button
+        >
+      </template>
+      <template #susTainTime="scope">
+        <span>{{ scope.row.beginTime }} - {{ scope.row.endTime }}</span>
+      </template>
+      <template #random="scope">
+        <el-button type="text" @click="handlerRandom(scope.row)"
+          >修改链接</el-button
+        >
+      </template>
     </ct-table>
     <div class="tableFooter">
       <el-pagination
@@ -134,7 +158,8 @@ const emit = defineEmits([
   'handlerDelete',
   'handlerEdit',
   'handlerCreate',
-  'handlerMoreDelete'
+  'handlerMoreDelete',
+  'handlerRule'
 ])
 const handlerDelete = (row: Object) => {
   emit('handlerDelete', row)
@@ -144,6 +169,12 @@ const handlerEdit = (row: Object) => {
 }
 const handlerCreate = () => {
   emit('handlerCreate')
+}
+const handlerRule = (row: Object) => {
+  emit('handlerRule', row)
+}
+const handlerRandom = async (row: any) => {
+  await adminStore.adminRandomAction(row.productId)
 }
 
 const selectItems = ref()
@@ -155,9 +186,15 @@ const handlerMoreDelete = () => {
     emit('handlerMoreDelete', selectItems.value)
   }
 }
-const handlerSwitch = (row: any, newValue: boolean) => {
-  row.ruleStatus = newValue
-  console.log(row)
+const handlerSwitch = (row: any, newValue: boolean, field: string) => {
+  row[field] = newValue
+  if (Object.keys(row).length > 1) {
+    if (field === 'showStatus') {
+      adminStore.editActivityAction(row)
+    } else if (field === 'ruleStatus') {
+      adminStore.editRuleAction(row)
+    }
+  }
 }
 
 let page = reactive({
@@ -178,6 +215,11 @@ watch(
     deep: true
   }
 )
+
+// eslint-disable-next-line no-undef
+defineExpose({
+  page
+})
 </script>
 
 <style scoped lang="less">

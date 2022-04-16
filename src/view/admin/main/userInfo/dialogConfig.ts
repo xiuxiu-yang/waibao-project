@@ -7,7 +7,7 @@ const dialogConfig = {
       rules: [
         {
           required: true,
-          message: '请选择用户',
+          message: '请输入用户',
           trigger: 'blur'
         }
       ]
@@ -43,7 +43,7 @@ const dialogConfig = {
       rules: [
         {
           required: true,
-          message: '请选择用户',
+          message: '请输入角色',
           trigger: 'blur'
         }
       ]
@@ -52,6 +52,7 @@ const dialogConfig = {
       label: '性别',
       field: 'gender',
       type: 'select',
+      placeholder: '请选择性别',
       options: [
         {
           label: '男',
@@ -60,6 +61,13 @@ const dialogConfig = {
         {
           label: '女',
           value: '0'
+        }
+      ],
+      rules: [
+        {
+          required: true,
+          message: '请选择性别',
+          trigger: 'blur'
         }
       ]
     },
@@ -70,13 +78,14 @@ const dialogConfig = {
       rules: [
         {
           required: true,
-          message: '请选择用户',
+          message: '请输入地址',
           trigger: 'blur'
         }
       ]
     }
   ],
   formTitle: '用户信息',
-  colStyle: 24
+  colStyle: 24,
+  labelPosition: 'left'
 }
 export default dialogConfig

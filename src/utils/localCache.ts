@@ -6,6 +6,7 @@ class LocalCache {
     if (value) {
       return JSON.parse(value)
     }
+    return undefined
   }
 
   setItem(key: string, value: string) {

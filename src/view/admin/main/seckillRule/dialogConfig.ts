@@ -1,16 +1,6 @@
-const dialogConfig: {
-  formInfo: {
-    label: string
-    rules?: any[]
-    field: string
-    type: string
-    options?: { label: string; value: number }[]
-    placeholder?: string
-    url?: string
-  }[]
-  formTitle: string
-  colStyle: number
-} = {
+import { IDialogType } from '../type'
+
+const dialogConfig: IDialogType = {
   formInfo: [
     {
       label: '规则名',
@@ -49,21 +39,10 @@ const dialogConfig: {
           trigger: 'blur'
         }
       ]
-    },
-    {
-      label: '规则介绍',
-      field: 'ruleContent',
-      type: 'input',
-      rules: [
-        {
-          required: true,
-          message: '请选择用户',
-          trigger: 'blur'
-        }
-      ]
     }
   ],
   formTitle: '秒杀规则',
-  colStyle: 24
+  colStyle: 24,
+  labelPosition: 'left'
 }
 export default dialogConfig

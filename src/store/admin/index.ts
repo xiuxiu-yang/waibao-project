@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 
 import {
+  adminExitRequest,
   adminLoginRequest,
   getSekillActivityRequest,
   getSekillResultRequest,
@@ -15,12 +16,18 @@ import {
   deleteUserInfoRequest,
   deleteActivityRequest,
   createViolationInfoRequest,
+  createActivityRequest,
   editViolationRequest,
   editRuleRequest,
-  editUserInfoRequest
+  editUserInfoRequest,
+  editActivityRequest,
+  editSkillRuleRequest,
+  adminRandomRequest,
+  adminGetBankInfo
 } from '@/request'
 
 import localCache from '@/utils/localCache'
+import router from '@/router'
 
 const useAdmin = defineStore('admin', {
   state: () => {
@@ -28,19 +35,37 @@ const useAdmin = defineStore('admin', {
       token: '',
       activity: {},
       result: {},
-      userInfo: {},
-      rule: {},
+      userInfo: {
+        records: []
+      },
+      rule: {
+        records: []
+      },
       primary: {},
-      violation: {}
+      violation: {},
+      bankInfo: {
+        bankAccount: 0
+      }
     }
   },
   getters: {},
   actions: {
+    async adminExitAction() {
+      await adminExitRequest()
+    },
     async adminLoginAction(data: Object) {
       const loginAdminResult = await adminLoginRequest(data)
-      const { token } = loginAdminResult.data.data
-      localCache.setItem('token', token)
-      this.token = token
+      if (loginAdminResult.data.code === 200) {
+        const { token } = loginAdminResult.data.data
+        if (token) {
+          localCache.setItem('ad_token', token)
+        }
+        this.token = token
+        router.push('/admin')
+      } else {
+        // eslint-disable-next-line no-undef
+        ElMessage.error(loginAdminResult.data.data)
+      }
     },
     async getTableDataAction(
       url: String,
@@ -90,7 +115,7 @@ const useAdmin = defineStore('admin', {
       await deleteRuleRequest(data)
       await this.getTableDataAction('rule')
     },
-    async editRuleAction(data: number[]) {
+    async editRuleAction(data: any) {
       await editRuleRequest(data)
       await this.getTableDataAction('rule')
     },
@@ -121,6 +146,45 @@ const useAdmin = defineStore('admin', {
     async createViolationInfoAction(data: any) {
       await createViolationInfoRequest(data)
       await this.getTableDataAction('violation')
+    },
+    async createActivityAction(data: any) {
+      await createActivityRequest(data)
+      await this.getTableDataAction('activity')
+    },
+    async editActivityAction(data: any) {
+      await editActivityRequest(data)
+      await this.getTableDataAction('activity')
+    },
+    async editSkillRuleAction(ruleId: number, arr: string[]) {
+      const data: any = {}
+      if (ruleId === 1) {
+        ;[
+          data.overdueYear,
+          data.overdueDay,
+          data.overdueTimes,
+          data.overdueMinMoney
+        ] = arr
+      } else if (ruleId === 3) {
+        if (arr[0] === '无业') {
+          data.workStatus = 0
+        }
+        if (arr[0] === '就业') {
+          data.workStatus = 1
+        }
+      } else if (ruleId === 5) {
+        ;[data.age] = arr
+      }
+      await editSkillRuleRequest({
+        ruleId,
+        ...data
+      })
+    },
+    async adminRandomAction(productId: number) {
+      await adminRandomRequest(productId)
+    },
+    async adminGetBankInfoAction() {
+      const result = await adminGetBankInfo()
+      this.bankInfo = result.data.data
     }
   }
 })

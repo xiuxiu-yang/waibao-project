@@ -39,9 +39,53 @@ const dialogConfig: IDialogType = {
       ]
     },
     {
+      label: '产品净值',
+      field: 'worth',
+      type: 'input',
+      rules: [
+        {
+          required: true,
+          message: '请输入产品净值',
+          trigger: 'blur'
+        }
+      ]
+    },
+    {
+      label: '开始时间',
+      field: 'beginTime',
+      type: 'datapicker',
+      rules: [
+        {
+          required: true,
+          message: '请输入开始时间',
+          trigger: 'blur'
+        },
+        {
+          validator(rule: any, value: any, callback: any) {
+            const date = new Date(value)
+            const now = Date.now()
+            if (date.getTime() - now > 14 * 24 * 60 * 60 * 1000) {
+              callback(new Error('距离现在时间不能超过两星期'))
+            }
+          },
+          trigger: 'blur'
+        }
+      ]
+    },
+    {
+      label: '结束时间',
+      field: 'endTime',
+      type: 'datapicker'
+    },
+    {
+      label: 'url',
+      field: 'url',
+      type: 'url'
+    },
+    {
       label: '产品描述',
       field: 'productComment',
-      type: 'input',
+      type: 'textarea',
       rules: [
         {
           required: true,
@@ -49,32 +93,10 @@ const dialogConfig: IDialogType = {
           trigger: 'blur'
         }
       ]
-    },
-    {
-      label: '展示状态',
-      field: 'showStatus',
-      type: 'select',
-      placeholder: '请选择是否展示',
-      options: [
-        {
-          label: '展示',
-          value: 0
-        },
-        {
-          label: '不展示',
-          value: 1
-        }
-      ],
-      rules: [
-        {
-          required: true,
-          message: '请选择状态',
-          trigger: 'blur'
-        }
-      ]
     }
   ],
   formTitle: '活动信息',
-  colStyle: 24
+  colStyle: 24,
+  labelPosition: 'left'
 }
 export default dialogConfig
